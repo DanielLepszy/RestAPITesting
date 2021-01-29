@@ -1,12 +1,12 @@
 package unitTests;
 
 import configReader.ConfigReader;
+import data.CountriesName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class ReaderUnitTests extends ConfigReader {
+class ConfigReaderTest extends ConfigReader {
 
     /**
      * Test if reader return proper value of property
@@ -31,5 +31,24 @@ public class ReaderUnitTests extends ConfigReader {
     public void testReadNonExistedProperty() {
         String property = readProperties("XXX");
         assertNull(property);
+    }
+
+    /**
+     * Test if reader return full endpoint with proper value
+     **/
+    @Test
+    public void testSetValueToEndpoint() {
+        String fullEndpoint = setValueToEndpoint("Name","poland");
+        assertEquals(fullEndpoint,"https://restcountries.eu/rest/v2/name/poland");
+    }
+    /**
+     * Test if reader return full endpoint with proper value
+     **/
+
+    @Test
+    public void getNames() {
+        CountriesName names= new CountriesName();
+
+        System.out.println(names.getCountriesName());
     }
 }

@@ -28,4 +28,12 @@ public class ConfigReader {
         return value;
     }
 
+    public String setValueToEndpoint(String endpoint,  String value)
+    {
+        String uri = readProperties("URI");
+        String propertyValue = readProperties(endpoint);
+        String endpointWithValue = String.format(propertyValue,value);
+        return uri+endpointWithValue;
+    }
+
 }
