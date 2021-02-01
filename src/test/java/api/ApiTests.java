@@ -51,13 +51,13 @@ public class ApiTests extends ConfigReader {
     public void
     get_country_name_endpoint_resource_and_check_if_currencies_name_is_proper() {
         HashSet<String> countriesName = new CountriesName().getCountriesName();
-        List<String> list = new ArrayList<String>(countriesName);
+        List<String> list = new ArrayList<>(countriesName);
         String url = "";
 
         for (int x = 0; x < countriesName.size(); x++) {
 
             url = "https://restcountries.eu/rest/v2/name/" + list.get(x);
-            System.out.println(url);
+            System.out.println(x +". "+ url);
             when().
                     get(url).
                     then().
