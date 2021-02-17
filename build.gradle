@@ -16,33 +16,15 @@ dependencies {
 dependencies{
     implementation 'junit:junit:4.12'
 
-    //    // https://mvnrepository.com/artifact/org.testng/testng
-//    testCompile group: 'org.testng', name: 'testng', version: '7.0.0'
-//
-//    // https://mvnrepository.com/artifact/io.cucumber/cucumber-core
-//    compile group: 'io.cucumber', name: 'cucumber-core', version: '4.8.0'
-//    // https://mvnrepository.com/artifact/io.cucumber/cucumber-java
-//
-//    compile group: 'io.cucumber', name: 'cucumber-java', version: '4.8.0'
-//
-//    // https://mvnrepository.com/artifact/info.cukes/cucumber-testng
-//    compile group: 'info.cukes', name: 'cucumber-testng', version: '1.2.5'
-//
-//    // https://mvnrepository.com/artifact/io.cucumber/gherkin
-//    compile group: 'io.cucumber', name: 'gherkin', version: '8.1.1'
-//
-//    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
-//    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
-
-    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-firefox-driver
-
-    compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: '3.141.59'
-
     // https://mvnrepository.com/artifact/io.rest-assured/rest-assured
     testCompile group: 'io.rest-assured', name: 'rest-assured', version: '4.3.3'
 
     // https://mvnrepository.com/artifact/io.rest-assured/json-schema-validator
     compile group: 'io.rest-assured', name: 'json-schema-validator', version: '4.3.3'
+
+    // https://mvnrepository.com/artifact/org.hamcrest/hamcrest-library
+    testImplementation group: 'org.hamcrest', name: 'hamcrest-library', version: '2.2'
+
 
 }
 
