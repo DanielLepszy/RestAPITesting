@@ -1,101 +1,66 @@
 package api;
 
 import configuration.CommentEndpoint;
+import configuration.UsersEndpoint;
+import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
 import model.comments.Comments;
+import model.users.Address;
+import model.users.Company;
+import model.users.Geo;
+import model.users.Users;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
-public class CommentsAPITests extends CommentEndpoint {
+public class UsersAPITests extends UsersEndpoint {
 
     @Test
-    public void get_comment_with_id_1_and_check_model() {
-        Comments model = new Comments(1, 1, "id labore ex et quam laborum",
-                "Eliseo@gardner.biz",
-                "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium");
+    public void update_user_address()
+    {
+        Users user = getUser(1);
+        user.getAddress().setCity("Warsaw");
+        user.getAddress().setStreet("Olegarska");
+        user.getAddress().setZipcode("22-104");
+        user.getAddress().setSuite("Fake 123");
+        user.getAddress().getGeo().setLat(111.22f);
+        user.getAddress().getGeo().setLng(80.88f);
 
-        Comments comment = getComment(1);
-
-        Assertions.assertEquals(comment.body, model.body);
-        Assertions.assertEquals(comment.email, model.email);
-    }
-
-    @Test
-    public void put_model_comment_and_check_data() {
-        Comments model = getComment(1);
-        model.setBody("New body descriptions");
-
-        given()
+        lastResponse = given()
                 .contentType("application/json")
-                .body(model)
+                .body(user)
                 .when()
-                .put(endPoint + "/1")
-                .then()
-                .assertThat()
-                .statusCode(200)
-                .and()
-                .assertThat()
-                .body("body", is(model.body))
-                .and()
-                .assertThat()
-                .body("id", is(1));
-
-    }
-
-    @Test
-    public void post_new_comment_and_check_data() {
-        Comments model = new Comments(0, 1, "New name for request",
-                "newEmail@user.com",
-                "New body descriptions");
-
-        given()
-                .contentType("application/json")
-                .body(model)
-                .when()
-                .post(endPoint)
-                .then()
-                .assertThat()
-                .statusCode(201)
-                .and()
-                .assertThat()
-                .body("body", is(model.body))
-                .and()
-                .assertThat()
-                .body("id", is(501));
-
-    }
-
-    @Test
-    public void check_all_comments_of_sigle_post() {
-        int postId = 1;
-
-        List<Integer> id_comments  = given()
-                .queryParam("postId", postId)
-                .when()
-                .get(endPoint)
-                .jsonPath().get("id");
-
-        int commentId = id_comments.get(0);
-
-        Comments model = getComment(id_comments.get(0));
-
-        String json = given()
-                .queryParam("postId",postId)
-                .queryParam("id",commentId)
-                .when()
-                .get(endPoint)
-                .jsonPath().get("[0]").toString();
+                .put(endPoint+"/1");
+        Users updatedUser = lastResponse.as(Users.class);
 
         Assertions.assertEquals(200,getLastStatusCode());
-        Assertions.assertEquals(model.toString(),json);
-
+        Assertions.assertEquals(user.toString(),updatedUser.toString());
     }
+    @Test
+    public void post_new_user()
+    {
+        Users user = new Users(0,"FakeName","Fake","fake@as.pl",
+                new Address("FakeStreet","FakeSuite","Warsaw","123",
+                        new Geo(111.2f,2222.1f)),
+                "+12 123 544 200","abc.de.pl",
+                new Company("FakeCompany","FakePhrase","vs"));
+
+        lastResponse = given()
+                .contentType("application/json")
+                .body(user)
+                .when()
+                .post(endPoint);
+
+        Users updatedUser = lastResponse.as(Users.class);
+
+        Assertions.assertEquals(201,getLastStatusCode());
+        user.setId(updatedUser.id);
+        Assertions.assertEquals(user.toString(),updatedUser.toString());
+    }
+
 }

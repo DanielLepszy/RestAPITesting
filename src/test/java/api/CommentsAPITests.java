@@ -74,7 +74,7 @@ public class CommentsAPITests extends CommentEndpoint {
     }
 
     @Test
-    public void check_all_post_comments() {
+    public void check_all_comments_of_sigle_post() {
         int postId = 1;
 
         List<Integer> id_comments  = given()
@@ -87,7 +87,6 @@ public class CommentsAPITests extends CommentEndpoint {
 
         Comments model = getComment(id_comments.get(0));
 
-//        Comments commentInPost = given()
         String json = given()
                 .queryParam("postId",postId)
                 .queryParam("id",commentId)
@@ -95,6 +94,7 @@ public class CommentsAPITests extends CommentEndpoint {
                 .get(endPoint)
                 .jsonPath().get("[0]").toString();
 
+        Assertions.assertEquals(200,getLastStatusCode());
         Assertions.assertEquals(model.toString(),json);
 
     }

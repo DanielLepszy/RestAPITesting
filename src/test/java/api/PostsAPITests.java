@@ -4,6 +4,7 @@ import configuration.CommentEndpoint;
 import configuration.PostsEndpoint;
 import model.comments.Comments;
 import model.posts.Post;
+import model.users.Users;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -45,13 +46,10 @@ public class PostsAPITests extends PostsEndpoint {
 
     }
 //    @Test
-//    public void post_new_comment_and_check_data() {
-//        Comments model = new Comments(0, 1, "New name for request",
-//                "newEmail@user.com",
-//                "New body descriptions");
+//    public void get_specific_post_of_single_user() {
 //
-//        given()
-//                .contentType("application/json")
+//
+//       Users user = given()
 //                .body(model)
 //                .when()
 //                .post(endPoint)
@@ -66,4 +64,5 @@ public class PostsAPITests extends PostsEndpoint {
 //                .body("id",is(501));
 //
 //    }
+//
 }
